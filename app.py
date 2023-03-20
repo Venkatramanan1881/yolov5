@@ -10,6 +10,7 @@ import pandas
 
 st.set_page_config(layout="wide")
 
+cfg_model_path = 'model/best.pt'
 model = None
 confidence = .25
 
@@ -96,7 +97,6 @@ def video_input(data_src):
 def infer_image(img, size=None):
     model.conf = confidence
     model.line_thickness = 1
-    model.weights = 'yolov5s.pt'
     result = model(img, size=size) if size else model(img)
     df = result.pandas().xyxy[0]
     result.render(0)
@@ -106,7 +106,7 @@ def infer_image(img, size=None):
 
 @st.experimental_singleton
 def load_model(path, device):
-    model_ = torch.hub.load('ultralytics/yolov5', force_reload=True)
+    model_ = torch.hub.load('ultralytics/yolov5', 'custom', path=path, force_reload=True)
     model_.to(device)
     print("model to ", device)
     return model_
