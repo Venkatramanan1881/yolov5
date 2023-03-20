@@ -10,7 +10,7 @@ import pandas
 
 st.set_page_config(layout="wide")
 
-cfg_model_path = 'model/best.pt'
+cfg_model_path = 'yolov5s.pt'
 model = None
 confidence = .25
 
